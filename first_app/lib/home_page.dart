@@ -1,3 +1,4 @@
+import 'package:first_app/animation_icons.dart';
 import 'package:first_app/learn_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class Home extends StatelessWidget {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (BuildContext context){
-              return LearnFlutter();
+              return AnimationIcons();
             }),
           );
         },

@@ -1,3 +1,6 @@
+import 'package:first_app/panier_page.dart';
+import 'package:first_app/profile_page.dart';
+import 'package:first_app/side_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
@@ -26,10 +29,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPage = 0;
+  List<Widget> pages = [Home(),Panier(),Profile()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyDrawer(),
       appBar: AppBar(
         title: Text('Home Page'),
       ),
@@ -39,19 +42,7 @@ class _HomePageState extends State<HomePage> {
         },
         child: Icon(Icons.add),
       ),
-      bottomNavigationBar: NavigationBar(
-        destinations: [
-          NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.account_box), label: 'profile')
-        ],
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPage = index;
-          });
-        },
-        selectedIndex: currentPage,
-      ),
-      body: Home()
+       body: Home(),
     );
   }
 }
@@ -63,14 +54,15 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        children: [
+        children: const[
           DrawerHeader(
               child: Center(
             child: CircleAvatar(
               radius: 40,
               backgroundImage: AssetImage("assets/images/afrakla.png"),
             ),
-          ))
+          )),
+
         ],
       ),
     );
