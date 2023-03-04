@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: const InputDecoration(
                           alignLabelWithHint: false,
                           hintText: 'Search',
-                          disabledBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none
                           border: InputBorder.none
                         ),
                         validator: (String? value) {
@@ -248,9 +248,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       IconButton(
                                         onPressed: () {
+                                          panier.add(plats[index]);
                                         },
                                         icon: Icon(
-                                          Icons.accessibility_sharp,
+                                          Icons.shopping_cart,
                                           color: Colors.orange[300],
                                         ),
                                       )
