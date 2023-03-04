@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:menyou/configuration.dart';
-import 'package:menyou/screens/panier.dart';
 
 class ProductDetailles extends StatefulWidget {
   const ProductDetailles({Key? key, required this.index}) : super(key: key);
@@ -37,7 +36,7 @@ class _ProductDetaillesState extends State<ProductDetailles> {
                             });
                           },
                           icon: Icon(
-                            Icons.add_a_photo_sharp,
+                            Icons.favorite,
                             color: Colors.white,
                           ))
                     ],
