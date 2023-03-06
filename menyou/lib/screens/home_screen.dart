@@ -88,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         decoration: const InputDecoration(
                           alignLabelWithHint: false,
                           hintText: 'Search',
-                          disabledBorder: InputBorder.none
+                          disabledBorder: InputBorder.none,
                           border: InputBorder.none
                         ),
                         validator: (String? value) {

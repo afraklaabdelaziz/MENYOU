@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "283047014083",
+    "project_id": "menyou-d3b83",
+    "storage_bucket": "menyou-d3b83.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283047014083:android:a696be3e19c58134f8fc76",
+        "android_client_info": {
+          "package_name": "com.example.menyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "283047014083-vkiobkrm4bnuaql9dl60kgmco8opp3jh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_sqc8tI-XRZbA7OBiXUHTEKbNKHgJhPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "283047014083-vkiobkrm4bnuaql9dl60kgmco8opp3jh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
