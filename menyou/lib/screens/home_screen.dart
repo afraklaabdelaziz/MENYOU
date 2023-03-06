@@ -153,119 +153,121 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
 
-          Container(
-            height: 460,
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: GridView.count(
-              childAspectRatio: 0.8,
-              // Create a grid with 2 columns. If you change the scrollDirection to
-              // horizontal, this produces 2 rows.
-              crossAxisCount: 2,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-              // Generate 100 widgets that display their index in the List.
-              children: List.generate(plats.length, (index) {
-                return
-                  Container(
-                      width: double.infinity,
-                      height:double.infinity,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                       child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (BuildContext context) {
-                              return ProductDetailles(index: index,);
-                            }));
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20)
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 85,
-                                  child: Row(
-                                    children: [
-                                      Image.asset(plats[index]["image"]),
-                                    ],
+          Expanded(
+            child: Container(
+              height: 460,
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: GridView.count(
+                childAspectRatio: 0.8,
+                // Create a grid with 2 columns. If you change the scrollDirection to
+                // horizontal, this produces 2 rows.
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+                // Generate 100 widgets that display their index in the List.
+                children: List.generate(plats.length, (index) {
+                  return
+                    Container(
+                        width: double.infinity,
+                        height:double.infinity,
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                         child: TextButton(
+                            onPressed: () {
+                              Navigator.of(context)
+                                  .push(MaterialPageRoute(builder: (BuildContext context) {
+                                return ProductDetailles(index: index,);
+                              }));
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20)
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    height: 85,
+                                    child: Row(
+                                      children: [
+                                        Image.asset(plats[index]["image"]),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Text(
-                                  plats[index]["name"],
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                      color: Colors.black87),
-                                ),
-                                Container(
-                                  width: 120,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        plats[index]["name"],
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            IconButton(
-                                              onPressed: () {},
-                                              icon: Icon(
-                                                Icons.star,
-                                                color: Colors.yellow,
+                                  Text(
+                                    plats[index]["name"],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                        color: Colors.black87),
+                                  ),
+                                  Container(
+                                    width: 120,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          plats[index]["name"],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87),
+                                        ),
+                                        Container(
+                                          child: Row(
+                                            children: [
+                                              IconButton(
+                                                onPressed: () {},
+                                                icon: Icon(
+                                                  Icons.star,
+                                                  color: Colors.yellow,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              "4.5",
-                                              style: TextStyle(color: Colors.black87),
-                                            )
-                                          ],
+                                              Text(
+                                                "4.5",
+                                                style: TextStyle(color: Colors.black87),
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  width: 120,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        plats[index]['prix'].toString(),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black87),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          panier.add(plats[index]);
-                                        },
-                                        icon: Icon(
-                                          Icons.shopping_cart,
-                                          color: Colors.orange[300],
+                                  Container(
+                                    width: 120,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          plats[index]['prix'].toString(),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ],
+                                        IconButton(
+                                          onPressed: () {
+                                            panier.add(plats[index]);
+                                          },
+                                          icon: Icon(
+                                            Icons.shopping_cart,
+                                            color: Colors.orange[300],
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
 
 
-             ));
-              }),
+               ));
+                }),
+              ),
             ),
           )
 
