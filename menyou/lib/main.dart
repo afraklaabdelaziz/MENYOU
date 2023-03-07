@@ -40,6 +40,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: Drawer(
+
+      ),
       body: Stack(
         children: [
           DrawerScreen(),
@@ -49,9 +52,9 @@ class _HomeState extends State<Home> {
         bottomNavigationBar: NavigationBar(
           destinations: [
             NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-            NavigationDestination(icon: Icon(Icons.account_box), label: 'panier'),
-            NavigationDestination(icon: Icon(Icons.account_box), label: 'favories'),
-            NavigationDestination(icon: Icon(Icons.account_box), label: 'profile'),
+            NavigationDestination(icon: Icon(Icons.shopping_cart), label: 'panier'),
+            NavigationDestination(icon: Icon(Icons.favorite), label: 'favories'),
+            NavigationDestination(icon: Icon(Icons.shopping_cart_checkout_sharp), label: 'commandes'),
           ],
           onDestinationSelected: (int index) {
            setState(() {

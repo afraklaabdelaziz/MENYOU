@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:menyou/configuration.dart';
 import 'package:menyou/screens/product_detailles_screen.dart';
+import 'package:rive/rive.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,20 +12,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double xOffSet = 0;
-  double yOffSet = 0;
-  double scalFactor = 1;
   bool isDrawerOpen = false;
    int selected = 0;
   int currentPage = 0;
   PageController pageController = PageController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+ bool isShowLoading = false;
+  late SMITrigger check;
+  late SMITrigger error ;
+  late SMITrigger reset;
+  StateMachineController getRiveController (Artboard artboard){
+   StateMachineController? controller = StateMachineController.fromArtboard(artboard,"State Machine 1");
+   artboard.addController(controller!);
+   return controller!;
+  }
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      transform: Matrix4.translationValues(xOffSet, yOffSet, 0)
-        ..scale(scalFactor),
-      duration: Duration(microseconds: 250),
+    return Container(
       color: Colors.grey[200],
       child: Column(
         children: [
@@ -40,9 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? IconButton(
                         onPressed: () {
                           setState(() {
-                            xOffSet = 0;
-                            yOffSet = 0;
-                            scalFactor = 1;
                             isDrawerOpen = false;
                           });
                         },
@@ -51,9 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     : IconButton(
                         onPressed: () {
                           setState(() {
-                            xOffSet = 230;
-                            yOffSet = 150;
-                            scalFactor = 0.6;
                             isDrawerOpen = true;
                           });
                         },
@@ -154,120 +152,159 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
 
           Expanded(
-            child: Container(
-              height: 460,
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: GridView.count(
-                childAspectRatio: 0.8,
-                // Create a grid with 2 columns. If you change the scrollDirection to
-                // horizontal, this produces 2 rows.
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                // Generate 100 widgets that display their index in the List.
-                children: List.generate(plats.length, (index) {
-                  return
-                    Container(
-                        width: double.infinity,
-                        height:double.infinity,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)
-                          ),
-                         child: TextButton(
-                            onPressed: () {
-                              Navigator.of(context)
-                                  .push(MaterialPageRoute(builder: (BuildContext context) {
-                                return ProductDetailles(index: index,);
-                              }));
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20)
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    height: 85,
-                                    child: Row(
-                                      children: [
-                                        Image.asset(plats[index]["image"]),
-                                      ],
+            child: Stack(
+              children:[ Container(
+                height: 460,
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                child: GridView.count(
+                  childAspectRatio: 0.8,
+                  // Create a grid with 2 columns. If you change the scrollDirection to
+                  // horizontal, this produces 2 rows.
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  // Generate 100 widgets that display their index in the List.
+                  children: List.generate(plats.length, (index) {
+                    return
+                      Container(
+                          width: double.infinity,
+                          height:double.infinity,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)
+                            ),
+                           child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(builder: (BuildContext context) {
+                                  return ProductDetailles(index: index,);
+                                }));
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20)
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 85,
+                                      child: Row(
+                                        children: [
+                                          Image.asset(plats[index]["image"]),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    plats[index]["name"],
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: Colors.black87),
-                                  ),
-                                  Container(
-                                    width: 120,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          plats[index]["name"],
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87),
-                                        ),
-                                        Container(
-                                          child: Row(
-                                            children: [
-                                              IconButton(
-                                                onPressed: () {},
-                                                icon: Icon(
-                                                  Icons.star,
-                                                  color: Colors.yellow,
+                                    Text(
+                                      plats[index]["name"],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Colors.black87),
+                                    ),
+                                    Container(
+                                      width: 120,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            plats[index]["name"],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black87),
+                                          ),
+                                          Container(
+                                            child: Row(
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () {},
+                                                  icon: Icon(
+                                                    Icons.star,
+                                                    color: Colors.yellow,
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(
-                                                "4.5",
-                                                style: TextStyle(color: Colors.black87),
-                                              )
-                                            ],
+                                                Text(
+                                                  "4.5",
+                                                  style: TextStyle(color: Colors.black87),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Container(
-                                    width: 120,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          plats[index]['prix'].toString(),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            panier.add(plats[index]);
-                                          },
-                                          icon: Icon(
-                                            Icons.shopping_cart,
-                                            color: Colors.orange[300],
+                                    Container(
+                                      width: 120,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            plats[index]['prix'].toString(),
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black87),
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                          IconButton(
+                                            onPressed: () {
+                                               setState(() {
+                                                 isShowLoading = true;
+                                               });
+                                               Future.delayed(Duration(seconds: 1),(){
+                                                 panier.add(plats[index]);
+                                                 check.fire();
+                                                 Future.delayed(Duration(seconds: 2),(){
+                                                   setState(() {
+                                                     isShowLoading = false;
+                                                   });
+                                                 });
+                                               });
+                                            },
+                                            icon: Icon(
+                                              Icons.shopping_cart,
+                                              color: Colors.orange[300],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
 
 
-               ));
-                }),
+                 ));
+                  }),
+                ),
               ),
+               isShowLoading
+                ? Positioned.fill(
+                    child: Column(
+                      children: [
+                        Spacer(),
+                        SizedBox(
+                          width: 100,
+                          height: 100,
+                          child: RiveAnimation.asset("assets/rive/check.riv",
+                          onInit: (artboard){
+                            StateMachineController controller = getRiveController(artboard);
+                            check = controller.findSMI("Check") as SMITrigger;
+                            error = controller.findSMI("Error") as SMITrigger;
+                            reset = controller.findSMI("Reset") as SMITrigger;
+
+                          },),
+                        ),
+                        Text("success",style: TextStyle(color: Colors.green,fontSize: 13),),
+                        Spacer(flex: 2,)
+                      ],
+                    ),
+                ) :
+                   SizedBox(
+
+                   )
+            ]
             ),
           )
 
