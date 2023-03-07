@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menyou/main.dart';
+import 'package:rive/rive.dart';
 
 class LeadingPage extends StatelessWidget {
   const LeadingPage({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class LeadingPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Image.asset("assets/images/afrakla.png"),
+            RiveAnimation.asset("assets/rive/food.riv"),
             Container(
               child: Text(
                 "Toutes les plas ici",

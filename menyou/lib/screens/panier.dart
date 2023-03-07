@@ -117,8 +117,15 @@ class _PanierState extends State<Panier> {
                       ),
                     );
                   }
-              )
-          )
+              ),
+          ),
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.all(0.9),
+          child: ElevatedButton(
+            onPressed: () {},
+            child: Text('commander'),
+          ),
+        ),
       );
     }
   }

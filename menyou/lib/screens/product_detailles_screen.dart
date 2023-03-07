@@ -80,7 +80,7 @@ class _ProductDetaillesState extends State<ProductDetailles> {
                                       }
                                     });
                                   },
-                                  child: Icon(Icons.add),
+                                  child: Icon(Icons.remove),
                                 ),
                                 Text(quantity.toString()),
                                 ElevatedButton(
