@@ -1,8 +1,10 @@
-import 'package:flutter/gestures.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:menyou/configuration.dart';
 import 'package:menyou/screens/product_detailles_screen.dart';
 import 'package:rive/rive.dart';
+
+import '../models/restaurant.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
    artboard.addController(controller!);
    return controller!;
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
