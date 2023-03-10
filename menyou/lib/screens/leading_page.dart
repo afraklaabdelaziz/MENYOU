@@ -15,7 +15,11 @@ class LeadingPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            RiveAnimation.asset("assets/rive/food.riv"),
+            SizedBox(
+              height: 200,
+                width: 500,
+                child: RiveAnimation.asset("assets/rive/food.riv")
+            ),
             Container(
               child: Text(
                 "Toutes les plas ici",
