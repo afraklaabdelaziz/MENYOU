@@ -16,6 +16,11 @@ class _ProductDetaillesState extends State<ProductDetailles> {
   String idPlat;
   _ProductDetaillesState(this.idPlat);
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
@@ -71,45 +76,33 @@ class _ProductDetaillesState extends State<ProductDetailles> {
                                 children: [
                                   Container(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment
-                                          .center,
-                                      children: [
-                                        ElevatedButton(
-                                          style: const ButtonStyle(
-                                              backgroundColor: MaterialStatePropertyAll(
-                                                  Colors.orange),
-                                              minimumSize: MaterialStatePropertyAll(
-                                                  Size(10, 10)),
-                                              maximumSize: MaterialStatePropertyAll(
-                                                  Size(40, 40))),
-                                          onPressed: () {
-                                            setState(() {
-                                              quantity--;
-                                              if (quantity < 1) {
+                                        mainAxisAlignment:MainAxisAlignment.center,
+                                        children: [
+                                          IconButton(icon: Icon(
+                                              Icons.remove_circle,
+                                              color: quantity != 1 ? Colors.orange : Colors.grey,
+                                              weight: 2),
+                                            onPressed: () {
+                                              setState(() {
+                                                quantity--;
+                                              });
+                                              if(quantity <=1){
                                                 quantity = 1;
                                               }
-                                            });
-                                          },
-                                          child: Icon(Icons.remove),
-                                        ),
-                                        Text(quantity.toString()),
-                                        ElevatedButton(
-                                          style: const ButtonStyle(
-                                              backgroundColor: MaterialStatePropertyAll(
-                                                  Colors.orange),
-                                              minimumSize: MaterialStatePropertyAll(
-                                                  Size(10, 10)),
-                                              maximumSize: MaterialStatePropertyAll(
-                                                  Size(40, 40))),
-                                          onPressed: () {
-                                            setState(() {
-                                              quantity++;
-                                            });
-                                          },
-                                          child: Icon(Icons.add),
-                                        )
-                                      ],
-                                    ),
+                                            },
+                                          ),
+                                          Text(quantity.toString()),
+                                          IconButton(icon: Icon(
+                                              Icons.add_circle,
+                                              color:  Colors.orange,
+                                              weight: 2),
+                                            onPressed: () {
+                                              setState(() {
+                                                quantity++;
+                                              });
+                                            },
+                                          ),
+                                        ])
                                   ),
                                   Container(
                                     margin: EdgeInsets.symmetric(

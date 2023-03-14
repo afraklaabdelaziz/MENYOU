@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menyou/main.dart';
+import 'package:menyou/screens/restaurant_screen.dart';
 import 'package:rive/rive.dart';
 
 class LeadingPage extends StatelessWidget {
