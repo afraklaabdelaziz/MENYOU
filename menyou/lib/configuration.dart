@@ -1,14 +1,4 @@
-import 'package:flutter/material.dart';
-
-Color primaryGreen = Color(0xff416d6d);
-
-List<BoxShadow> shadowList = [
-  BoxShadow(
-    color: Colors.grey,
-    blurRadius: 30,
-    offset: Offset(0, 10),
-  )
-];
+import 'models/plat.dart';
 
 List<Map> categories = [
   {'name': 'makla','icon':'assets/images/Screenshot 2023-02-24 185954.png'},
@@ -16,7 +6,6 @@ List<Map> categories = [
   {'name': 'makla2','icon':'assets/images/Screenshot 2023-02-24 185954.png'},
   {'name': 'makla3','icon':'assets/images/Screenshot 2023-02-24 185954.png'},
   {'name': 'makla4','icon':'assets/images/Screenshot 2023-02-24 185954.png'},
-
 ];
 
 
@@ -53,10 +42,10 @@ List<Map> plats = [
 
 ];
 
-List<Map> panier = [
+List<Plat> panier = [
 
 ];
 
-List<Map> favorie = [
+List<Plat> favorie = [
 
 ];
