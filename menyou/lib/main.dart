@@ -1,14 +1,27 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:menyou/components/layout.dart';
+import 'package:menyou/components/panier_drawer.dart';
 import 'package:menyou/screens/favorie.dart';
 import 'package:menyou/screens/leading_page.dart';
 import 'package:menyou/screens/panier.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:menyou/screens/restaurant_screen.dart';
 
-Future main() async {
+void main(){
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+   Firebase.initializeApp();
+   AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+            channelKey: 'channelKey',
+            channelName: 'channelName',
+            channelDescription: 'channelDescription'
+        )
+      ],
+      debug: true
+  );
   runApp(const MyApp());
 }
 
@@ -45,7 +58,7 @@ class _HomeState extends State<Home> {
         width: 200,
         margin: EdgeInsets.symmetric(horizontal: 12),
         child: Drawer(
-          child: Panier(),
+          child: PanierDrawer()
         ),
       ),
       body:

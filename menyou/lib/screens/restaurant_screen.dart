@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:menyou/main.dart';
 import 'package:menyou/screens/plat_screen.dart';
 import '../models/restaurant.dart';
 import '../services/restaurant_service.dart';
@@ -41,7 +40,7 @@ class _RestaurantListState extends State<RestaurantList> {
                                        print(restaurants[index].id);
                                        Navigator.of(context)
                                            .push(MaterialPageRoute(builder: (BuildContext context) {
-                                         return PlatList(restaurantId: restaurants[index].id,);
+                                         return PlatList(restaurant: restaurants[index],);
                                        }));
                                      },
                                      child: Container(

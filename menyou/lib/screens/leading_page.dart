@@ -9,6 +9,7 @@ class LeadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       body: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
@@ -16,31 +17,12 @@ class LeadingPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            SizedBox(
-              height: 200,
-                width: 500,
-                child: RiveAnimation.asset("assets/rive/food.riv")
-            ),
-            Container(
-              child: Text(
-                "Toutes les plas ici",
-                style: TextStyle(color: Colors.red[400], fontSize: 20),
-              ),
-            ),
-            Container(
-              child: Column(
-                children: [
+            Image.asset("assets/images/food.png",height: 500,),
+
                   Text(
                     "Bien Venu chez nous",
                     style: TextStyle(color: Colors.black87, fontSize: 30,fontWeight: FontWeight.bold),
                   ),
-                  Text(
-                    "Restaurant Afrakla",
-                    style: TextStyle(color: Colors.red[400], fontSize: 30,fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
             Container(
               width: 300,
               child: ElevatedButton(

@@ -1,10 +1,11 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:menyou/configuration.dart';
 import 'package:menyou/models/commande.dart';
-import 'package:menyou/models/plat.dart';
 import 'package:menyou/services/commande_service.dart';
 
 import '../main.dart';
+import '../models/commande_items.dart';
 
 class Panier extends StatefulWidget {
   const Panier({Key? key}) : super(key: key);
@@ -14,7 +15,37 @@ class Panier extends StatefulWidget {
 }
 
 class _PanierState extends State<Panier> {
-  int quantity = 1;
+  double prixTotal = 0;
+  void calculePrixTotal(){
+    prixTotal = 0;
+    panier.forEach((element) {
+      prixTotal += element.prix * element.quantity.ceilToDouble();
+      print(prixTotal);
+    });
+  }
+  sendNotification(double prixTotal){
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+            id: 10,
+            channelKey: 'channelKey',
+            title: 'commande est ajouter avec success',
+            body: 'prix Total ' + prixTotal.toString()
+        )
+    );
+  }
+
+  @override
+  void initState() {
+    calculePrixTotal();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed){
+      if(!isAllowed){
+        AwesomeNotifications().requestPermissionToSendNotifications(
+
+        );
+      }
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     if (panier.length == 0) {
@@ -54,29 +85,18 @@ class _PanierState extends State<Panier> {
                     itemCount: panier.length,
                     itemBuilder: (context, index) {
                       return Container(
-                        height: 240,
                         child: Row(
                           children: [
-                            Expanded(
-                                child: Stack(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.orange[300],
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  margin: EdgeInsets.only(top: 40),
-                                ),
-                                Align(
-                                  child: Image.asset(panier[index].image),
-                                )
-                              ],
-                            )),
+                             Container(
+                              alignment: Alignment.center,
+                               margin: EdgeInsets.only(top: 60, bottom: 20),
+                             child:Image.asset(panier[index].image,width: 150,height: 150,)
+                             ),
                             Expanded(
                                 child: Container(
                               margin: EdgeInsets.only(top: 60, bottom: 20),
                               decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Colors.white.withOpacity(0.5),
                                   borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(20),
                                       bottomRight: Radius.circular(20))),
@@ -114,7 +134,7 @@ class _PanierState extends State<Panier> {
                                     ),
                                   ),
                                   Text(
-                                    panier[index].nom.toString(),
+                                    panier[index].nom,
                                     style: TextStyle(
                                       fontSize: 20,
                                     ),
@@ -126,27 +146,29 @@ class _PanierState extends State<Panier> {
                                           children: [
                                         IconButton(
                                           icon: Icon(Icons.remove_circle,
-                                              color: quantity != 1
+                                              color: panier[index].quantity != 1
                                                   ? Colors.orange
                                                   : Colors.grey,
                                               weight: 2),
                                           onPressed: () {
                                             setState(() {
-                                              quantity--;
+                                              panier[index].quantity--;
                                             });
-                                            if (quantity <= 1) {
-                                              quantity = 1;
+                                            calculePrixTotal();
+                                            if (panier[index].quantity <= 1) {
+                                              panier[index].quantity = 1;
                                             }
                                           },
                                         ),
-                                        Text(quantity.toString()),
+                                        Text(panier[index].quantity.toString()),
                                         IconButton(
                                           icon: Icon(Icons.add_circle,
                                               color: Colors.orange, weight: 2),
                                           onPressed: () {
                                             setState(() {
-                                              quantity++;
+                                              panier[index].quantity++;
                                             });
+                                            calculePrixTotal();
                                           },
                                         ),
                                       ])),
@@ -166,8 +188,14 @@ class _PanierState extends State<Panier> {
                     color: Colors.grey[200],
                     child: ElevatedButton(
                       onPressed: () {
-                       Commande commande = Commande(reference: "dddddd", date: DateTime.now(), clientId: "client1", plats:panier , prixTotal: 23);
-                        addCaommande(commande);
+                       Commande commande = Commande(reference: "dddddd", date: DateTime.now(), clientId: "client1", plats:panier , prixTotal: prixTotal);
+                       addCommande(commande);
+                       panier.forEach((element) {
+                         CommandeItems commandeItem = CommandeItems(prix: element.prix, plat: element.id, commande: commande.reference, id: 'zzz',quantity: element.quantity);
+                         addCommandeItem(commandeItem);
+                       });
+                        sendNotification(prixTotal);
+                       panier.clear();
                       },
                       child: Text(
                         "commander",
@@ -179,6 +207,21 @@ class _PanierState extends State<Panier> {
                       ),
                     )),
               ),
+
+              Positioned(
+                right: 10,
+                left: 10,
+                top: 0,
+                child: Container(
+                    color: Colors.grey[200],
+                      child: Text(
+                        "prix total "+ prixTotal.toString(),
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    )),
             ],
           ),
         ),

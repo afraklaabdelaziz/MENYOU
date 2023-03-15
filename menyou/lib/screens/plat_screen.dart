@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menyou/models/categorie.dart';
 import 'package:menyou/models/plat.dart';
+import 'package:menyou/models/restaurant.dart';
 import 'package:menyou/screens/product_detailles_screen.dart';
 import 'package:menyou/services/plat_service.dart';
 import 'package:rive/rive.dart';
@@ -9,10 +10,10 @@ import '../configuration.dart';
 import '../services/categorie_service.dart';
 
 class PlatList extends StatefulWidget {
-  const PlatList({Key? key, required this.restaurantId}) : super(key: key);
-  final String restaurantId;
+  const PlatList({Key? key, required this.restaurant}) : super(key: key);
+  final Restaurant restaurant;
   @override
-  State<PlatList> createState() => _PlatListState(restaurantId);
+  State<PlatList> createState() => _PlatListState(restaurant);
 }
 
 class _PlatListState extends State<PlatList> {
@@ -23,8 +24,8 @@ class _PlatListState extends State<PlatList> {
   late SMITrigger check;
   late SMITrigger error;
   late SMITrigger reset;
-  String restaurantId;
-  _PlatListState(this.restaurantId);
+  Restaurant restaurant;
+  _PlatListState(this.restaurant);
   StateMachineController getRiveController(Artboard artboard) {
     StateMachineController? controller =
         StateMachineController.fromArtboard(artboard, "State Machine 1");
@@ -42,7 +43,20 @@ class _PlatListState extends State<PlatList> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: Text("PlatList"),
+        title: Text(restaurant.nom, style: TextStyle(
+            color: Colors.white,
+            fontSize: 28
+        ),) ,
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(restaurant.image),
+                  fit: BoxFit.fill
+              )
+          ),
+        ),
+
       ),
       body: Column(
         children: [
@@ -111,12 +125,12 @@ class _PlatListState extends State<PlatList> {
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 10),
                   child: FutureBuilder(
-                      future: getPlatRestaurant(restaurantId, idCategorie),
+                      future: getPlatRestaurant(restaurant.id, idCategorie),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           List<Plat> plats = snapshot.data!;
                           return GridView.count(
-                            childAspectRatio: 0.8,
+                            childAspectRatio: 0.58,
                             // Create a grid with 2 columns. If you change the scrollDirection to
                             // horizontal, this produces 2 rows.
                             crossAxisCount: 2,
@@ -144,15 +158,17 @@ class _PlatListState extends State<PlatList> {
                                         }));
                                       },
                                       child: Container(
+                                        padding: EdgeInsets.only(left: 10),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Image.asset(
-                                              plats[index].image,
-                                              fit: BoxFit.cover,
-                                              height: 95,
-                                              width: double.infinity,
+                                            Center(
+                                              child: Image.asset(
+                                                plats[index].image,
+                                                fit: BoxFit.cover,
+                                                width: 130,
+                                              ),
                                             ),
                                             Text(
                                               plats[index].nom,
@@ -196,17 +212,30 @@ class _PlatListState extends State<PlatList> {
                                               ),
                                             ),
                                             Container(
-                                              width: 120,
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    plats[index].prix.toString(),
+                                                  Text("Prix ",
                                                     style: TextStyle(
                                                         fontWeight: FontWeight.bold,
                                                         color: Colors.black87),
                                                   ),
+                                                  Container(
+                                                    margin: EdgeInsets.symmetric(horizontal: 20),
+                                                    child: Text(plats[index].prix.toString() + " \$",
+                                                      style: TextStyle(
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Colors.orangeAccent,
+                                                          fontSize: 18
+                                                    )),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 120,
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
                                                   IconButton(
                                                     onPressed: () {
                                                       setState(() {
@@ -235,6 +264,14 @@ class _PlatListState extends State<PlatList> {
                                                       color: Colors.orange[300],
                                                         size: 35
                                                     ),
+                                                  ),
+                                                  IconButton(
+                                                    icon: Icon(Icons.favorite,color: Colors.red,size: 35,),
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        favorie.add(plats[index]);
+                                                      });
+                                                    },
                                                   )
                                                 ],
                                               ),
@@ -243,17 +280,6 @@ class _PlatListState extends State<PlatList> {
                                         ),
                                       ),
                                     ),
-                                    Positioned(
-                                        bottom: 10,
-                                        right: 0,
-                                        child: IconButton(
-                                          icon: Icon(Icons.favorite,color: Colors.red,size: 35,),
-                                          onPressed: () {
-                                            setState(() {
-                                              favorie.add(plats[index]);
-                                            });
-                                          },
-                                        )),
                                   ],
                                 ),
                               ));
