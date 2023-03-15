@@ -11,7 +11,6 @@ class ProductDetailles extends StatefulWidget {
   State<ProductDetailles> createState() => _ProductDetaillesState(idPlat);
 }
 class _ProductDetaillesState extends State<ProductDetailles> {
-
   int quantity = 1;
   String idPlat;
   _ProductDetaillesState(this.idPlat);
@@ -60,8 +59,6 @@ class _ProductDetaillesState extends State<ProductDetailles> {
                         child: Stack(
                           children: [
                             Container(
-                              height: 1000,
-                              width: double.infinity,
                               padding:
                               EdgeInsets.only(right: 40, top: 140, left: 40),
                               margin: EdgeInsets.only(top: 150),
@@ -75,6 +72,7 @@ class _ProductDetaillesState extends State<ProductDetailles> {
                               child: ListView(
                                 children: [
                                   Container(
+                                    margin: EdgeInsets.only(top: 10),
                                     child: Row(
                                         mainAxisAlignment:MainAxisAlignment.center,
                                         children: [
@@ -186,6 +184,7 @@ class _ProductDetaillesState extends State<ProductDetailles> {
                                         ),
                                         onPressed: () {
                                           setState(() {
+                                            plat.quantity = quantity;
                                             panier.add(plat);
                                           });
                                         },
@@ -197,12 +196,8 @@ class _ProductDetaillesState extends State<ProductDetailles> {
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 80),
-                              child: CircleAvatar(
-                                radius: 130,
-                                backgroundImage:
-                                AssetImage(plat.image),
+                              child: Image.asset(plat.image),
                               ),
-                            ),
                           ],
                         )), //  Container(
 

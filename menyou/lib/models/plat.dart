@@ -7,8 +7,10 @@ class Plat {
   String categorie;
   String image;
   String restaurant;
+  int quantity = 1;
 
-  Plat({ required this.id,
+  Plat({
+    required this.id,
     required this.nom,
     required this.prix,
     required this.description,
