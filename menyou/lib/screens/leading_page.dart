@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:menyou/main.dart';
-import 'package:menyou/screens/restaurant_screen.dart';
-import 'package:rive/rive.dart';
 
 class LeadingPage extends StatelessWidget {
   const LeadingPage({Key? key}) : super(key: key);
@@ -17,7 +15,7 @@ class LeadingPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Image.asset("assets/images/food.png",height: 500,),
+            Image.asset("assets/images/food (2).png",height: 500,),
 
                   Text(
                     "Bien Venu chez nous",

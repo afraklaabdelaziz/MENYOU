@@ -18,6 +18,7 @@ class PlatList extends StatefulWidget {
 
 class _PlatListState extends State<PlatList> {
   int selected = 0;
+  int checkPanier = 0;
   int currentPage = 0;
   String idCategorie = "Tout";
   bool isShowLoading = false;
@@ -193,7 +194,9 @@ class _PlatListState extends State<PlatList> {
                                                     child: Row(
                                                       children: [
                                                         IconButton(
-                                                          onPressed: () {},
+                                                          onPressed: () {
+
+                                                          },
                                                           icon: Icon(
                                                             Icons.star,
                                                             color: Colors.yellow,
@@ -241,14 +244,24 @@ class _PlatListState extends State<PlatList> {
                                                       setState(() {
                                                         panier.forEach((p) {
                                                           if(plats[index].id == p.id){
-                                                            print(index);
+                                                            checkPanier++;
                                                           }
                                                         });
                                                         isShowLoading = true;
                                                       });
                                                       Future.delayed(
                                                           Duration(seconds: 1), () {
-                                                        panier.add(plats[index]);
+                                                            if(checkPanier == 0){
+                                                              panier.add(plats[index]);
+                                                            }else{
+                                                              panier.remove(plats[index]);
+                                                              plats[index].quantity++;
+                                                              panier.add(plats[index]);
+                                                              setState(() {
+                                                                checkPanier = 0;
+                                                              });
+                                                            }
+
                                                         check.fire();
                                                         Future.delayed(
                                                             Duration(seconds: 2),

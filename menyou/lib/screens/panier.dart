@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:menyou/configuration.dart';
 import 'package:menyou/models/commande.dart';
 import 'package:menyou/services/commande_service.dart';
+import 'package:uuid/uuid.dart';
 
 import '../main.dart';
 import '../models/commande_items.dart';
@@ -188,14 +189,16 @@ class _PanierState extends State<Panier> {
                     color: Colors.grey[200],
                     child: ElevatedButton(
                       onPressed: () {
-                       Commande commande = Commande(reference: "dddddd", date: DateTime.now(), clientId: "client1", plats:panier , prixTotal: prixTotal);
+                       Commande commande = Commande(reference: Uuid().v4(), date: DateTime.now(), clientId: "client1", prixTotal: prixTotal);
                        addCommande(commande);
                        panier.forEach((element) {
-                         CommandeItems commandeItem = CommandeItems(prix: element.prix, plat: element.id, commande: commande.reference, id: 'zzz',quantity: element.quantity);
+                         CommandeItems commandeItem = CommandeItems(prix: element.prix, plat: element.id, commande: commande.reference, id: Uuid().v4(),quantity: element.quantity);
                          addCommandeItem(commandeItem);
                        });
                         sendNotification(prixTotal);
-                       panier.clear();
+                       setState(() {
+                         panier.clear();
+                       });
                       },
                       child: Text(
                         "commander",
