@@ -41,6 +41,7 @@ class _LayoutState extends State<Layout> {
                   children: const [Text("Food menu")],
                 ),
                 CircleAvatar(
+                  backgroundImage: AssetImage("assets/images/afrakla.png"),
                 )
               ],
             ),

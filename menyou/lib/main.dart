@@ -2,6 +2,7 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:menyou/components/layout.dart';
 import 'package:menyou/components/panier_drawer.dart';
+import 'package:menyou/screens/commande_screen.dart';
 import 'package:menyou/screens/favorie.dart';
 import 'package:menyou/screens/leading_page.dart';
 import 'package:menyou/screens/panier.dart';
@@ -48,19 +49,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int currentPage = 0;
-  List<Widget> pages = [RestaurantList(),Panier(),Favorie()];
+  List<Widget> pages = [RestaurantList(),Panier(),Favorie(),ListCommande()];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: Container(
-        height: 500,
-        width: 200,
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        child: Drawer(
-          child: PanierDrawer()
-        ),
-      ),
+      endDrawer:
+        PanierDrawer(),
+
       body:
       Container(
       color: Colors.grey[200],
